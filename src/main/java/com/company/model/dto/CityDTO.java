@@ -1,7 +1,6 @@
 package com.company.model.dto;
 
 
-import com.company.model.entity.WeatherEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +15,5 @@ public class CityDTO {
     private String name;
     private Double temperature;
     private Boolean visible;
-    private List<WeatherEntity> weathers = new ArrayList<>();
+
 }

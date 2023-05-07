@@ -20,7 +20,5 @@ public class CityEntity {
     private String name;
     private Double temperature;
     private Boolean visible;
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WeatherEntity> weathers = new ArrayList<>();
 
 }
