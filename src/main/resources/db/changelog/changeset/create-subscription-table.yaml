@@ -19,20 +19,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: city_id
-                  type: BIGINT
+                  name: city_name
+                  type: VARCHAR
                   constraints:
                     nullable: false
-            foreignKeyConstraints:
-              - foreignKeyConstraint:
-                  baseColumnNames: user_id
-                  baseTableName: subscription
-                  constraintName: fk_subscription_user
-                  referencedColumnNames: id
-                  referencedTableName: user
-              - foreignKeyConstraint:
-                  baseColumnNames: city_id
-                  baseTableName: subscription
-                  constraintName: fk_subscription_city
-                  referencedColumnNames: id
-                  referencedTableName: city

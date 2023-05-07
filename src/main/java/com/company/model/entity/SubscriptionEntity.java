@@ -1,5 +1,6 @@
 package com.company.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -9,15 +10,12 @@ import lombok.Setter;
 @Getter
 @Data
 @Table(name = "subscription")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SubscriptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user_id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
-    private CityEntity city_id;
+    private Long user_id;
+    private String city_name;
 
 }

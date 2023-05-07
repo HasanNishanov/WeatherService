@@ -10,6 +10,6 @@ import lombok.Setter;
 public class SubscriptionDTO {
 
     private Long id;
-    private UserEntity user_id;
-    private CityEntity city_id;
+    private Long user_id;
+    private String city_name;
 }

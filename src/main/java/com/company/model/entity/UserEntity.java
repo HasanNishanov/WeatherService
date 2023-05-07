@@ -1,6 +1,7 @@
 package com.company.model.entity;
 
 import com.company.enums.ProfileStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Data
 @Table(name = "user")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +24,6 @@ public class UserEntity {
     private String password;
     private ProfileStatus role=ProfileStatus.USER;;
     private String token;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubscriptionEntity> subscriptions = new ArrayList<>();
+    private String subscriptions;
 
 }

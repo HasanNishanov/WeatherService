@@ -12,10 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDTO {
-    private Long id;
-    private String username;
-    private String password;
-    private String token;
-    private ProfileStatus role = ProfileStatus.USER;
-    private List<SubscriptionEntity> subscriptions = new ArrayList<>();
+        private Long id;
+        private String username;
+        private String password;
+        private String token;
+        private ProfileStatus role = ProfileStatus.USER;
+        private String subscriptions;
 }

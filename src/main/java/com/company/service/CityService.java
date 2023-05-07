@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+
 @Service
 public class CityService {
     private final CityRepository cityRepository;
@@ -16,7 +17,7 @@ public class CityService {
     }
 
     public Flux<CityEntity> getAllCities() {
-        return cityRepository.findAll();
+        return cityRepository.findAllCities();
     }
 
     public Mono<CityEntity> getCityByName(String name) {

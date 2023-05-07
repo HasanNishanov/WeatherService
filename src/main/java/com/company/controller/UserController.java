@@ -1,22 +1,18 @@
 package com.company.controller;
 
 import com.company.model.dto.UserDTO;
-import com.company.model.entity.CityEntity;
 import com.company.model.entity.UserEntity;
-import com.company.repository.CityRepository;
 import com.company.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import reactor.core.publisher.Flux;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
 @Controller
+    @RequestMapping("/user")
 public class UserController {
 
     private ModelMapper modelMapper;
@@ -36,5 +32,11 @@ public class UserController {
                         .map(jwtToken -> ResponseEntity.ok(Map.of("jwt", jwtToken))));
     }
 
-
+    @PostMapping("/subscribe-to-city")
+        public Mono<String> subscribeToCity(@RequestParam Long userId, @RequestParam String cityName) {
+        return userService.subscribeToCity(userId, cityName);
+    }
 }
+
+
+

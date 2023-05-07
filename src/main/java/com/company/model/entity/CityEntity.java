@@ -1,5 +1,6 @@
 package com.company.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Data
 @Table(name = "city")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

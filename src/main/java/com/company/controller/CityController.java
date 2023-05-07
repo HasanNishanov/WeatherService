@@ -17,7 +17,7 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public Flux<CityEntity> getAllCities() {
         return cityService.getAllCities();
     }
