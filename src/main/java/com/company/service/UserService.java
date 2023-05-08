@@ -2,13 +2,10 @@ package com.company.service;
 
 import com.company.enums.ProfileStatus;
 import com.company.model.dto.UserDTO;
-import com.company.model.entity.CityEntity;
-import com.company.model.entity.SubscriptionEntity;
 import com.company.model.entity.UserEntity;
 import com.company.repository.CityRepository;
 import com.company.repository.SubscriptionRepository;
 import com.company.repository.UserRepository;
-import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,14 +50,7 @@ public class UserService {
 //                        }));
 //    }
 public Mono<Void> updateCitySubscription(Long userId, String cityName) {
-    return subscriptionRepository.saveSubscription(Math.toIntExact(userId), cityName)
-            .flatMap(savedSubscription -> userRepository.findById(userId))
-            .flatMap(user -> { // it doesn't work idk why , now i should to create a new method for init data to user table
-                // mmmm i want to eat PLOVVVV , but deadlines are comming
-                user.setSubscriptions(cityName);
-                return userRepository.save(user);
-            })
-            .then();
+    return subscriptionRepository.saveSubscription(Math.toIntExact(userId), cityName);
 }
 
     public Mono<Object> createUser(UserEntity user) {
@@ -76,23 +66,12 @@ public Mono<Void> updateCitySubscription(Long userId, String cityName) {
                 .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create subscription-updated.html.html")));
     }
 
-
-    public Mono<Object> updateUser(Long userId, UserDTO userDTO) {
-        return userRepository.findByUsername(userDTO.getUsername())
-                .flatMap(foundUser -> Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is already taken")))
-                .switchIfEmpty(Mono.defer(() -> {
-                    return userRepository.findById(userId)
-                            .flatMap(userEntity -> {
-                                userEntity.setUsername(userDTO.getUsername());
-                                userEntity.setPassword(encode(userDTO.getPassword()));
-                                userEntity.setRole(userDTO.getRole());
-                                userEntity.setSubscriptions(userDTO.getSubscriptions());
-                                return userRepository.save(userEntity);
-                            })
-                            .map(savedUser -> modelMapper.map(savedUser, UserDTO.class));
-                }))
-                .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to update subscription-updated.html.html")));
+    public Mono<Integer> updateUserAge(Long id, String cityName) {
+        return userRepository.updateCitySubscription(id,cityName);
     }
+
+
+
 
     public Mono<Void> deleteUser(Long userId) {
         return userRepository.deleteById(userId);

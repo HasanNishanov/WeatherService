@@ -19,7 +19,7 @@ public interface UserRepository extends R2dbcRepository<UserEntity, Long> {
     Mono<UserEntity> findByUsername(String username);
 
     @Modifying
-    @Query("UPDATE users SET subscription = $1 WHERE id = $2")
+    @Query("UPDATE users SET subscription = cityName  WHERE id = userId")
     Mono<Integer> updateCitySubscription(Long userId, String cityName);
 
 
