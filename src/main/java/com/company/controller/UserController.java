@@ -39,9 +39,8 @@ public class UserController {
 
     @PostMapping("/subscribe-to-city")
     public Mono<Void> subscribeToCity(@RequestParam Long userId, @RequestParam String cityName, ServerHttpResponse response) {
-        Mono<Void> updateAgeMono = userService.updateUserAge(userId, cityName).then();
-        Mono<Void> updateCitySubscriptionMono = userService.updateCitySubscription(userId, cityName);
-        return updateAgeMono.and(updateCitySubscriptionMono);
+        userService.updateUserDescription(userId,cityName);
+        return userService.updateCitySubscription(userId, cityName);
     }
 
     @GetMapping("/city-list")

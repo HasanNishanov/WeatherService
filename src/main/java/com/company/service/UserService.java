@@ -66,7 +66,7 @@ public Mono<Void> updateCitySubscription(Long userId, String cityName) {
                 .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create subscription-updated.html.html")));
     }
 
-    public Mono<Integer> updateUserAge(Long id, String cityName) {
+    public Mono<Integer> updateUserDescription(Long id, String cityName) {
         return userRepository.updateCitySubscription(id,cityName);
     }
 
