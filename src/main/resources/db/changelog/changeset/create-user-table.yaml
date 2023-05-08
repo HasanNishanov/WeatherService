@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-user-table
+      id: create-subscription-updated.html.html-table
       author: x.nishanov
       changes:
         - createTable:
