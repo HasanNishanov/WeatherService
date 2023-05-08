@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.enums.ProfileStatus;
 import com.company.model.dto.UserDTO;
+import com.company.model.entity.CityEntity;
 import com.company.model.entity.SubscriptionEntity;
 import com.company.model.entity.UserEntity;
 import com.company.repository.CityRepository;
@@ -33,24 +34,34 @@ public class UserService {
         return b.encode(password);
     }
 
-    public Mono<String> subscribeToCity(Long userId, String cityName) {
-        return cityRepository.findByName(cityName)
-                .switchIfEmpty(Mono.error(new NotFoundException("City not found")))
-                .flatMap(city -> userRepository.findById(userId)
-                        .switchIfEmpty(Mono.error(new NotFoundException("User not found")))
-                        .flatMap(user -> {
-                            user.setSubscriptions(cityName);
-                            return userRepository.save(user)
-                                    .flatMap(savedUser -> {
-                                        // Создаем новую запись в таблице Subscriptions
-                                        SubscriptionEntity subscription = new SubscriptionEntity();
-                                        subscription.setUser_id(userId);
-                                        subscription.setCity_name(city.getName());
-                                        return subscriptionRepository.save(subscription);
-                                    })
-                                    .thenReturn("Successfully subscribed to city " + cityName);
-                        }));
-    }
+//    public Mono<String> subscribeToCity(Long userId, String cityName) {
+//        return cityRepository.findByName(cityName)
+//                .switchIfEmpty(Mono.error(new NotFoundException("City not found")))
+//                .flatMap(city -> userRepository.findById(userId)
+//                        .switchIfEmpty(Mono.error(new NotFoundException("User not found")))
+//                        .flatMap(subscription-updated.html.html -> {
+//                            subscription-updated.html.html.setSubscriptions(cityName);
+//                            return userRepository.save(subscription-updated.html.html)
+//                                    .flatMap(savedUser -> {
+//                                        // Создаем новую запись в таблице Subscriptions
+//                                        SubscriptionEntity subscription = new SubscriptionEntity();
+//                                        subscription.setUser_id(userId);
+//                                        subscription.setCity_name(city.getName());
+//                                        return subscriptionRepository.save(subscription);
+//                                    })
+//                                    .thenReturn("Successfully subscribed to city " + cityName);
+//                        }));
+//    }
+public Mono<Void> updateCitySubscription(Long userId, String cityName) {
+    return subscriptionRepository.saveSubscription(Math.toIntExact(userId), cityName)
+            .flatMap(savedSubscription -> userRepository.findById(userId))
+            .flatMap(user -> { // it doesn't work idk why , now i should to create a new method for init data to user table
+                // mmmm i want to eat PLOVVVV , but deadlines are comming
+                user.setSubscriptions(cityName);
+                return userRepository.save(user);
+            })
+            .then();
+}
 
     public Mono<Object> createUser(UserEntity user) {
         return userRepository.findByUsername(user.getUsername())
@@ -62,7 +73,7 @@ public class UserService {
                     return userRepository.save(userEntity)
                             .map(savedUser -> modelMapper.map(savedUser, UserDTO.class));
                 }))
-                .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create user")));
+                .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create subscription-updated.html.html")));
     }
 
 
@@ -80,7 +91,7 @@ public class UserService {
                             })
                             .map(savedUser -> modelMapper.map(savedUser, UserDTO.class));
                 }))
-                .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to update user")));
+                .onErrorResume(throwable -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to update subscription-updated.html.html")));
     }
 
     public Mono<Void> deleteUser(Long userId) {

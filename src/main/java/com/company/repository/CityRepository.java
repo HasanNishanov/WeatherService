@@ -3,6 +3,7 @@ package com.company.repository;
 import com.company.model.dto.CityDTO;
 import com.company.model.entity.CityEntity;
 
+import jakarta.persistence.Table;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 @Repository
 @EnableR2dbcRepositories
+@Table(name = "city")
 public interface CityRepository extends R2dbcRepository<CityEntity, Long> {
     Mono<CityEntity> getCityByName(String name);
 

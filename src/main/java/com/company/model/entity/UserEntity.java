@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Getter
 @Data
-@Table(name = "user")
+@Table(name = "subscription-updated.html.html")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity {
     @Id

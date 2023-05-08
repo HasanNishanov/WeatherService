@@ -4,11 +4,14 @@ import com.company.model.dto.UserDTO;
 import com.company.model.entity.UserEntity;
 import com.company.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.util.Map;
 
 @Controller
@@ -33,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/subscribe-to-city")
-        public Mono<String> subscribeToCity(@RequestParam Long userId, @RequestParam String cityName) {
-        return userService.subscribeToCity(userId, cityName);
+    public Mono<Void> subscribeToCity(@RequestParam Long userId, @RequestParam String cityName, ServerHttpResponse response) {
+        return userService.updateCitySubscription(userId, cityName);
     }
 }
 
