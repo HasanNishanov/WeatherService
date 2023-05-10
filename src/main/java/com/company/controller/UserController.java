@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.model.dto.UserDTO;
 import com.company.model.entity.CityEntity;
+import com.company.model.entity.SubscriptionEntity;
 import com.company.model.entity.UserEntity;
 import com.company.service.CityService;
 import com.company.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 
 import java.util.Map;
 
@@ -41,6 +43,11 @@ public class UserController {
     public Mono<Void> subscribeToCity(@RequestParam Long userId, @RequestParam String cityName, ServerHttpResponse response) {
         userService.updateUserDescription(userId,cityName);
         return userService.updateCitySubscription(userId, cityName);
+    }
+
+    @GetMapping("/user-details/{userId}")
+    public Mono<Tuple2<SubscriptionEntity, UserEntity>> getSubscriptionAndUser(@PathVariable Long userId) {
+        return userService.getSubscriptionAndUser(userId);
     }
 
     @GetMapping("/city-list")

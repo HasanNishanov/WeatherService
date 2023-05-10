@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.enums.ProfileStatus;
 import com.company.model.dto.UserDTO;
+import com.company.model.entity.SubscriptionEntity;
 import com.company.model.entity.UserEntity;
 import com.company.repository.CityRepository;
 import com.company.repository.SubscriptionRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 
 @Service
 public class UserService {
@@ -68,6 +70,13 @@ public Mono<Void> updateCitySubscription(Long userId, String cityName) {
 
     public Mono<Integer> updateUserDescription(Long id, String cityName) {
         return userRepository.updateCitySubscription(id,cityName);
+    }
+
+
+    public Mono<Tuple2<SubscriptionEntity, UserEntity>> getSubscriptionAndUser(Long userId) {
+        Mono<SubscriptionEntity> subscriptionMono = subscriptionRepository.findById(userId);
+        Mono<UserEntity> userMono = userRepository.findById(userId);
+        return Mono.zip(subscriptionMono, userMono);
     }
 
 

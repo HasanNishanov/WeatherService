@@ -15,7 +15,7 @@ import reactor.util.function.Tuple2;
 
 
 @RestController
-@RequestMapping("/admin/api/v1")
+@RequestMapping("/admin")
 public class AdminController {
     private final AdminService adminService;
     private final CityService cityService;
@@ -37,7 +37,7 @@ public class AdminController {
         return cityService.getAllCities();
     }
 
-    @PutMapping("/update-city/{id}")
+    @PutMapping("/update-city-weather/{id}")
     public Mono<CityEntity> updateCity(@PathVariable Long id, @RequestBody CityDTO cityDTO) {
         return cityService.updateCity(id, cityDTO);
     }
